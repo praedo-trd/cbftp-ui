@@ -1,0 +1,41 @@
+{% extends "layout.twig" %}
+
+{% macro from(value) %}
+    <s><code>{% if value is empty %}&lt;empty&gt;{% else %}{{ value }}{% endif %}</code></s>
+{% endmacro %}
+
+{% block content %}
+
+    <div class="hbd">
+      <h3>Tools > Data Immutable</h3>
+    </div>
+    
+    {% if msg %}
+      <div class="alert alert-success">{{ msg }}</div>
+    {% endif %}
+    
+    <table class="table table-striped table-bordered">
+        <thead class="table-light">
+          <th>Key</th>
+          <th>Adjustments</th>
+          <th>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+              <tr>
+                <td width="20%"><code>{{ row.k }}</code></td>
+                <td>
+                  {% for fixed in row.fixed %}
+                    <strong>{{ fixed.field }}</strong> {{ _self.from(fixed.from)}} - <code style="color: #25a14e">{{ fixed.to }}</code>
+                    <br />
+                  {% endfor %}
+                </td>
+                <td width="10%">
+                  <a class="btn btn-danger" href={{ path('tools.data_immutable_reset', {k: row.k}) }}>Reset all</a>
+                </td>
+              </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

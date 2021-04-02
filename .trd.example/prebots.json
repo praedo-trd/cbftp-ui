@@ -1,0 +1,12 @@
+[
+  {
+    "channel": "/#channel/i"
+    ,"bot": "/bot/i"
+    ,"string_match": "\/\\[(.*?)\\]\/i"
+  },
+  {
+    "channel": "/#channel2/i"
+    ,"bot": "/bot/i"
+    ,"string_match": "\/^[a-zA-Z0-9]+\\:\\s+(.*?)$\/i"
+  }
+]

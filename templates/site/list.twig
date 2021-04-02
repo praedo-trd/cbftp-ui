@@ -1,0 +1,61 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+            <div class="hbd">
+              <h1 class="heading">Site List</h1>
+              <div class="controls">
+                <a class="btn btn-primary" href="{{ path('site.add') }}">+ Add Site</a>
+              </div>
+            </div>
+            <br />
+
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                <tr>
+                    <th width="1%"></th>
+                    <th width="20%">Name</th>
+                    <th width="2%">Credits</th>
+                    <th width="2%">Sections</th>
+                    <th width="2%">Affils</th>
+                    <!-- <th width="70%">Last Activity</th> -->
+                    <th width="3%"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for siteName, siteInfo in sites %}
+                    <tr class="{% if siteInfo.enabled == 0 %}table-danger{% endif %}">
+                        <td>{% if siteInfo.enabled == 1 %}<i class="icon-check text-success"></i>{% else %}<i class="fa fa-times" style="color: red"></i>{% endif %}</td>
+                        <td><a href="{{ path('site.edit', {name: siteName}) }}">{{ siteName }}</a></td>
+                        <td>
+                          {% if siteInfo['credits'] is defined and siteInfo.credits %}
+                            {% set creds = siteInfo.credits|format_individual_credits %}
+                            {% if creds|length == 1 %}
+                              {{ creds|first }}
+                            {% else %}
+                              {% for bnc, value in creds  %}
+                                {{ bnc }}: {{ value }}<br>
+                              {% endfor %}
+                            {% endif %}
+                          {% else %}
+                            -
+                          {% endif %}
+                        </td>
+                        <td>
+                          {{ siteInfo.sections|length }}
+                          {% if siteInfo.untaggedSections > 0 %}/ <span class="text-danger">{{ siteInfo.untaggedSections }}</span>{% endif %}
+                        </td>
+                        <td>{% if siteInfo.affils is defined %}{{ siteInfo.affils|length }}{% else %}0{% endif %}</td>
+                        <!-- <td>{% if siteInfo.updated is defined %}{{ siteInfo.updated }}{% else %}n/a{% endif %}</td> -->
+                        <td>
+                          <a class="btn btn-outline-secondary" href="{{ path('site.edit', {name: siteName}) }}">Edit</a>
+                          <a class="btn btn-outline-secondary btn-disabled hint--bottom" aria-label="Not yet implemented"><i class="icon icon-trash-o"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+
+{% endblock %}

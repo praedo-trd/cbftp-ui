@@ -1,0 +1,11 @@
+{% macro format(value) %}
+  {% if value is iterable %}
+    {{ value|join(",") }}
+  {% elseif is_boolean(value) == true %}
+    {% if value == true %}true{% else %}false{% endif %}
+  {% elseif 'http://' in value or 'https://' in value %}
+    <a style="text-decoration: underline;" target="_blank" rel="noreferrer external noopener" href="{{value}}">{{value}}</a>
+  {% else %}
+    {{ value }}
+  {% endif %}
+{% endmacro %}

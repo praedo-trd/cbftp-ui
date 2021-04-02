@@ -1,0 +1,141 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+    <div class="hbd">
+      <h3 class="heading">{% if id == 0 %}Add new approval{% else %}Editing approval #{{ id }}{% endif %}</h3>
+    </div>
+
+    <form action="{{ path('approved.edit', {id: id}) }}" method="post">
+    
+        <div class="row mb-3">
+          {{ form_label(form.bookmark, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+          <div class="col-sm-9">
+            {{ form_widget(form.bookmark, { attr: { class: "form-select"}}) }}
+            {{ form_errors(form.bookmark) }}
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          {{ form_label(form.pattern, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+          <div class="col-sm-9">
+            {{ form_widget(form.pattern, { attr: { class: "form-control"}}) }}
+            {{ form_errors(form.pattern) }}
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          {{ form_label(form.type, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+          <div class="col-sm-9">
+            {% for child in form.type.children %}
+                  {{ form_widget(child) }}
+                  <label class="form-check-label" for="{{ child.vars.id }}">{{ child.vars.label }}</label>
+            {% endfor %}
+            {{ form_errors(form.type) }}
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          {{ form_label(form.chain, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+          <div class="col-sm-9">
+            {{ form_widget(form.chain, { attr: { class: "form-control"}}) }}
+            {{ form_errors(form.chain) }}
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          {{ form_label(form.maxlimit, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+          <div class="col-sm-9">
+            {{ form_widget(form.maxlimit, { attr: { class: "form-control"}}) }}
+            {{ form_errors(form.maxlimit) }}
+          </div>
+        </div>
+        
+        <div class="row mb-3">
+          {{ form_label(form.expires, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+          <div class="col-sm-9">
+            {{ form_widget(form.expires) }}
+            {{ form_errors(form.expires) }}
+          </div>
+        </div>
+        
+        {% if id > 0 %}
+        <div class="row mb-3">
+          {{ form_label(form.hits, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+          <div class="col-sm-9">
+            {{ form_widget(form.hits) }}
+          </div>
+        </div>
+        {% endif %}
+    
+        {{ form_widget(form) }}
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{{ path('approved.list') }}" class="btn btn-outline-secondary">Go Back</a>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+  var $targetInput = document.querySelector("input[name='form[pattern]']");
+  var $maxLimit = document.querySelector("input[name='form[maxlimit]']");
+  if($targetInput) {
+    var newNode = document.createElement('div');
+
+    newNode.innerHTML = 'Shortcuts: <a class="btn btn-xs btn-secondary" id="shortcut-toggle-resolution">Toggle resolution</a> <a id="shortcut-wildcard-episode" class="btn btn-xs btn-secondary">Wildcard episode</a>';
+    newNode.className = 'help-block';
+    $targetInput.parentNode.insertBefore(newNode, $targetInput.nextSibling);
+
+    // toggle res
+    document.getElementById("shortcut-toggle-resolution").addEventListener("click", function(event) {
+      if($targetInput.value.length) {
+        $targetInput.value = toggleResolution($targetInput.value);
+      }
+    });
+
+    // wildcard episode
+    document.getElementById("shortcut-wildcard-episode").addEventListener("click", function(event) {
+      if($targetInput.value.length) {
+        $targetInput.value = wildcardEpisode($targetInput.value);
+        if($targetInput.value.includes("*")) {
+          this.setAttribute("disabled", "disabled");
+          $maxLimit.value = 0;
+        }
+      }
+    });
+  }
+
+  function toggleResolution(rlsname) {
+    console.log(rlsname);
+    if(rlsname.toUpperCase().includes("720P")) {
+      return rlsname.replace(/720(P)/i, "1080$1");
+    }
+    else if(rlsname.toUpperCase().includes("1080P")) {
+      console.log("ok");
+      return rlsname.replace(/1080(P)/i, "720$1");
+    }
+    else {
+      return rlsname;
+    }
+  }
+
+  function wildcardEpisode(rlsname) {
+    if(rlsname.includes("*")) {
+      return rlsname;
+    }
+
+    var matches = /S\d+E\d+.*?[\._]/i.exec(rlsname);
+    if(matches !== null && matches.length > 0) {
+      return rlsname.replace(/E\d+/i, 'E*');
+    }
+
+    return rlsname;
+  }
+</script>
+{% endblock %}

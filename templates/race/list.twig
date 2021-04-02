@@ -1,0 +1,110 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+    </div>
+
+    <div style="padding-left: 1em; padding-right: 1em;">
+        
+        <div class="hbd">
+      <h1 class="heading">Latest races {% if tag is defined and tag is not null %}in {{ tag }}{% endif %}</h1>
+        <div class="controls">
+        <select class="form-select float-end" id="tag-selector">
+        <option value="">Filter by tag...</option>
+        {% for t in tags %}
+          
+          <option value="{{ t }}" class="{% if tag is defined and tag is not null and tag == t %}active{%endif%}">
+              {{ t }}
+          </option>
+        {% endfor %}
+        </select>
+        </div>
+        </div>
+        
+          
+
+        
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <!-- <th width="1%"></th> -->
+                        <th width="4%">Bookmark</th>
+                        <th width="1%"></th>
+                        <th width="4%">Options</th>
+                        <th width="70%">Releasename / Sites</th>
+                        <th width="15%%">When</th>
+                        <th width="5%" style="text-align: right">Timing</th>
+                    </tr>
+                </thead>
+            <tbody>
+                {% for row in races %}
+                <tr class="{% if row.chain|length < 2 %}race-empty{% endif %} {% if row.started == 1%}table-success{% endif %} {% if row.is_catastrophe %}table-danger{% endif %}">
+                    <!-- <td>
+                        {% if 'TV' in row.bookmark %}
+                            <i class="fa fa-television"></i>
+                        {% elseif ('X264-' in row.bookmark or 'XVID' == row.bookmark or 'DVDR' == row.bookmark) %}
+                            <i class="fa fa-film"></i>
+                        {%  elseif ('GAMES' in row.bookmark or 'DOX' in row.bookmark or 'CONSOLE' in row.bookmark or 'WII' in row.bookmark or 'XBOX' in row.bookmark or 'PS3' == row.bookmark or 'PS4' == row.bookmark) %}
+                            <i class="fa fa-gamepad"></i>
+                        {% elseif ('BOOKWARE' in row.bookmark or 'APPS' in row.bookmark) %}
+                            <i class="fa fa-file-text"></i>
+                        {% elseif ('XXX' in row.bookmark) %}
+                            <i class="fa fa-venus-double"></i>
+                        {% endif %}
+                    </td> -->
+                    <td style="text-align: center;">
+                      <a href="{{ path('race.list', {tag: row.bookmark}) }}" class="badge bg-{% if row.chain|length > 0 %}success{% else %}inactive{% endif %}" style="display: block">{{ row.bookmark }}</a>
+                    </td>
+                    <td>
+                        {% if row.has_cache %}
+                          <span class="badge bg-success" style="display: block"><i class="icon-check"></i></span>
+                        {% elseif attribute(datasourceMap, row.bookmark) == true %}
+                          <span class="badge bg-danger" style="display: block"><i class="icon-times"></i></span>
+                        {% else %}
+                          <span class="badge bg-secondary" style="display: block"><i class="icon-times"></i></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-secondary btn-xs hint--bottom" href="{{ path('tools.simulator', {bookmark: row.bookmark, rlsname: row.rlsname, use_cache: 0}) }}" aria-label="Simulate"><i class="icon-exchange"></i></a>
+                    </td>
+
+                    <td class="race-rlsname">
+                        <a href="{{ path('race.view_log', {id: row.id}) }}" style="color: inherit; text-decoration: none;"><strong>{{ row.rlsname }}</strong></a>
+                        <br><span style="font-size: .8em">
+                          {% if row.chain_info|length > 0 %}
+                            {% for si in row.chain_info %}
+                              {% if si.complete %}<u>{{ si.name }}</u>{% else %}{{ si.name }}{% endif %}{% if loop.last == false %},{% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        </span></td>
+                    <td><a title="{{ row.created }}">{{ row.created|time_diff }}</a></td>
+
+                    <td style="text-align: right">
+                      <span title="Race evaluation time">{{ row.duration }}</span>/<span title="Data lookup time">{{ row.dataLookupDuration }}</span>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {{ paginationHTML|raw }}
+
+    </div>
+
+    <div class="container">
+
+{% endblock %}
+
+{% block js %}
+<script>
+var select = document.querySelector("#tag-selector");
+var sampleUrl = "{{ path('race.list', {tag: "REPLACEME"})}}";
+select.addEventListener("change", function(e) {
+  var val = e.target.value;
+  if(val.length) {
+    window.location.href = sampleUrl.replace("REPLACEME", val);
+  }
+});
+</script>
+{% endblock %}

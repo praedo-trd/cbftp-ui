@@ -1,0 +1,143 @@
+{% extends "layout.twig" %}
+
+{% import "_macros/data_value.twig" as data_value %}
+
+{% block content %}
+
+    <div class="hbd">
+      <h3>Log for race #{{race.id}}</h3>
+    </div>
+
+    <p class="alert alert-warning"><a href="{{ path('tools.simulator', {bookmark: race.bookmark, rlsname: race.rlsname, use_cache: 0}) }}">Simulate with a cache refresh</a></p>
+
+    {% if race.log.catastrophes|length > 0 %}
+    <h4>Catastrophes</h4>
+      <div class="alert alert-danger">
+      {% for catastrophe in race.log.catastrophes %}
+        <p>- {{ catastrophe }}</p>
+      {% endfor %}
+      </div>
+      <p style="font-size: .8em">Note: data cache lookups are not made as an optimisation when catastrophes occur, to save time and effort.</p>
+    {% endif %}
+
+    {% if race.log.validSites|length > 0 %}
+      <div class="card bg-light">
+        <div class="card-header">
+          Valid Sites (affils in bold)
+        </div>
+        <div class="card-body">
+          {% for site in race.log.validSites|sort %}
+            {% if site in race.log.affilSites %}<strong>{%endif%}{{ site }}{% if site in race.log.affilSites %}</strong>{%endif%}{% if not loop.last %},{% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <br />
+      <div class="card bg-light">
+        <div class="card-header">Chain</div>
+        <div class="card-body">
+          {% for site in race.log.chain|sort %}
+            {% if site in race.log.affilSites %}<strong>{%endif%}{{ site }}{% if site in race.log.affilSites %}</strong>{%endif%}{% if not loop.last %},{% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <br />
+    {% else %}
+      <div class="alert alert-danger">
+          No valid sites found to race this
+      </div>
+    {% endif %}
+
+    {% if race.log.invalidSites|length > 0 %}
+    <div class="card bg-light">
+      <div class="card-header">
+        Invalid Sites
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <th>Site</th>
+                <th>Section</th>
+                <th>Reasons</th>
+            </thead>
+            <tbody>
+                {% for row in race.log.invalidSites %}
+                    <tr>
+                        <td width="10%"><strong>{{ row.site }}</strong></td>
+                        <td width="10%">{{ row.section }}</td>
+                        <td>
+                            - {{ row.invalidReasons|join("<br />- ")|raw }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+    {% endif %}
+
+    <br />
+    <div class="card bg-light">
+      <div class="card-header">Data</div>
+      <div class="card-body">
+        <table class="table table-bordered table-striped table-condensed">
+            <tbody>
+                <tr>
+                  <td width="10%" style="text-align: right; padding-right: 15px; padding-left: 20px;"><code>duration</code></td>
+                  <td style="padding-left: 15px;"><span style="color: #2f6f9f; font-family: monospace; font-size: 1em;">{{ duration }}</span></td>
+                </tr>
+                <tr>
+                  <td width="10%" style="text-align: right; padding-right: 15px; padding-left: 20px;"><code>dataLookupDuration</code></td>
+                  <td style="padding-left: 15px;"><span style="color: #2f6f9f; font-family: monospace; font-size: 1em;">{{ dataLookupDuration }}</span></td>
+                </tr>
+                {% for k, v in data %}
+                    <tr>
+                        <td width="10%" style="text-align: right; padding-right: 15px; padding-left: 20px;{% if v is null or (is_boolean(v) == false and v|length == 0) %};background: #DDD{% endif %}">
+                          {% if "." in k %}
+                            <code><span style="opacity: 1">{{ k|split(".")[0] }}</span>.<span style="opacity: 1">{{ k|split(".")[1] }}</span></code>
+                          {% else %}
+                            <code>{{ k }}</code>
+                          {% endif %}
+                        </td>
+                        <td style="padding-left: 15px;{% if v is null or (is_boolean(v) == false and v|length == 0) %};background: #DDD{% endif %}">
+                          <span style="color: #2f6f9f; font-family: monospace; font-size: 1em;">
+                            {% if immutableData is defined and immutableData.has(k) %}
+                              <s style="color: #e83e8c">{{ data_value.format(cleanData.get(k))|trim|default("<empty>") }}</s>&nbsp;
+                            {% endif %}
+                            {{ data_value.format(v) }}
+                          </span>
+                      </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br />
+    <div class="card bg-light">
+      <div class="card-header">Dupe Engine Sources</div>
+      <div class="card-body">
+        {% if race.log.dupeEngineSources| length > 0 %}
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                  <th>Rlsname</th>
+                  <th>When</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in race.log.dupeEngineSources %}
+                    <tr>
+                        <td>{{ row.rlsname }}</td>
+                        <td>{{ row.created|time_diff }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No sources found</p>
+        {% endif %}
+      </div>
+    </div>
+
+{% endblock %}

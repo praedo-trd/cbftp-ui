@@ -1,0 +1,66 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/png" href="/frontend/img/favicon.png">
+    <link rel="stylesheet" href="/frontend/js/dist/bundle.esbuild.css" />
+    {% block css %}{% endblock %}
+    <style type="text/css">
+
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark sticky-top navbar-expand-md">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ path('site.list') }}">
+      <img src="/frontend/img/favicon.png" width="30" height="30" alt="" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{{ path('race.list') }}">Races</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ path('site.list') }}">Sites</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ path('skiplist.list') }}">Skiplists</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ path('prebots.list') }}">Prebots</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ path('approved.list', {show: 'active'}) }}">Approvals</a></li>
+        {% if getenv('AUTOTRADING_ENABLED') %}
+          <li class="nav-item"><a class="nav-link" href="{{ path('autorules.list') }}">Auto Rules</a></li>
+        {% endif %}
+        <li class="nav-item"><a class="nav-link" href="{{ path('tools') }}">Tools</a></li>
+      </ul>
+      <ul class="navbar-nav">
+        <span class="nav-item"><a class="nav-link" href="{{ path('settings.edit') }}"><i class="icon-cog"></i> Settings</a></span>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+{% block content %}{% endblock %}
+</div>
+<div id="help">
+  <h2>Help <a class="close">x</a></h2>
+  <div class="content"></div>
+</div>
+
+
+<footer>
+  <br /><br /><br />
+</footer>
+
+<script src="/frontend/js/dist/bundle.esbuild.js"></script>
+{% block js %}{% endblock %}
+<!-- <script src="/frontend/libs/bootstrap.native/dist/bootstrap-native.min.js"></script> -->
+</body>
+</html>

@@ -1,0 +1,307 @@
+{% extends "layout.twig" %}
+{% import "_macros/data_value.twig" as data_value %}
+
+{% block content %}
+
+    <div class="hbd">
+      <h3>Tools</h3>
+      {% if results is not null and results.validSites|length > 0 %}
+      <div class="controls">
+        <a class="btn btn-primary" href="{{ path('approved.add', {
+            rlsname: data.rlsname,
+            bookmark: data.tag,
+            chain: results.chain|sort|join(",")
+        }) }}">+ Create approval</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <h3 class="mb-3">
+      Tools
+      
+    </h3>
+
+    {% if results %}
+
+        {% if autoResponse != false %}
+          <div class="alert alert-info">This will autotrade based on autorule: <code>{{ autoResponse }}</code></div>
+        {% endif %}
+
+        {% if results.catastrophes|length > 0 %}
+        <h4>Catastrophes</h4>
+          <div class="alert alert-danger">
+          {% for catastrophe in results.catastrophes %}
+            <p>- {{ catastrophe }}</p>
+          {% endfor %}
+          </div>
+          <p style="font-size: .8em">Note: data cache lookups are not made as an optimisation when catastrophes occur, to save time and effort.</p>
+        {% else %}
+          {% if results.validSites|length > 0 %}
+              <div class="card bg-light">
+                <div class="card-header">
+                  Valid Sites (affils in bold)
+                </div>
+                <div class="card-body">
+                  {% for site in results.validSites|sort %}
+                    {% if site in results.affilSites %}<strong>{%endif%}{{ site }}{% if site in results.affilSites %}</strong>{%endif%}{% if not loop.last %},{% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              <br />
+              <div class="card bg-light">
+                <div class="card-header">Chain</div>
+                <div class="card-body">
+                  {% for site in results.chain|sort %}
+                    {% if site in results.affilSites %}<strong>{%endif%}{{ site }}{% if site in results.affilSites %}</strong>{%endif%}{% if not loop.last %},{% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              <br />
+          {% else %}
+              <div class="alert alert-danger">
+                  No valid sites found to race this
+              </div>
+          {% endif %}
+        {% endif %}
+
+        {% if data["imdb.imdbid"] is defined %}
+          <!--
+          <h4>Movie info</h4>
+          <div class="well">
+
+              <div class="row">
+                <div class="col-md-8">
+                  <h3 style="margin-top:0">{{ data["imdb.title"]}} ({{ data["imdb.year"]}})</h3>
+                </div>
+                <div class="col-md-4">
+                  <h3 style="margin-top: 0; text-align: right">
+                    <i class="fa fa-star" style="color: gold"></i> {{ data["imdb.rating"]}}<span style="font-size: .5em">/10</span>
+                    <br>
+                    <span style="font-size: .5em">{{ data["imdb.votes"]}} votes</span>
+                  </h3>
+
+                </div>
+              </div>
+          </div>
+        -->
+        {% endif %}
+
+        {% if results.invalidSites|length > 0 %}
+        <div class="card bg-light">
+          <div class="card-header">
+            Invalid Sites
+          </div>
+          <div class="card-body">
+        {# <h4 class="mt-3">Invalid Sites</h4> #}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th>Site</th>
+                    <th>Section</th>
+                    <th>Reasons</th>
+                </thead>
+                <tbody>
+                    {% for row in results.invalidSites %}
+                        <tr>
+                            <td width="10%"><strong>{{ row.site }}</strong></td>
+                            <td width="10%">{{ row.section }}</td>
+                            <td>
+                                - {{ row.invalidReasons|join("<br />- ")|raw }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if results.invalidSitesOverrides|length > 0 %}
+        <div class="card bg-light">
+            <div class="card-header">Invalid Site over-rides</div>
+            
+            <div class="card-body">
+              <p>Sites on this list were added to the race due to other settings, most likely because they are affils on that site</p>
+              <table class="table table-bordered table-striped">
+                  <thead>
+                      <th>Site</th>
+                      <th>Section</th>
+                      <th>Reasons</th>
+                  </thead>
+                  <tbody>
+                      {% for row in results.invalidSitesOverrides %}
+                          <tr>
+                              <td width="10%"><strong>{{ row.site }}</strong></td>
+                              <td width="10%">{{ row.section }}</td>
+                              <td>
+                                  - {{ row.invalidReasons|join("<br />- ")|raw }}
+                              </td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+            </div>
+        </div>
+        {% endif %}
+
+        <br />
+        <div class="card bg-light">
+          <div class="card-header">Data</div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped table-condensed">
+                <tbody>
+                    {% for k, v in data %}
+                        <tr>
+                            <td width="10%" style="text-align: right; padding-right: 15px; padding-left: 20px;{% if v is null or (is_boolean(v) == false and v|length == 0) %};background: #DDD{% endif %}">
+                              {% if "." in k %}
+                                <code><span style="opacity: 1">{{ k|split(".")[0] }}</span>.<span style="opacity: 1">{{ k|split(".")[1] }}</span></code>
+                              {% else %}
+                                <code>{{ k }}</code>
+                              {% endif %}
+                            </td>
+                            <td style="padding-left: 15px;{% if v is null or (is_boolean(v) == false and v|length == 0) %};background: #DDD{% endif %}">
+                              <span style="color: #2f6f9f; font-family: monospace; font-size: 1em;">
+                                {% if immutableData.has(k) %}
+                                  <s style="color: #e83e8c">{{ data_value.format(cleanData.get(k))|trim|default("<empty>") }}</s>&nbsp;
+                                {% endif %}
+                                {{ data_value.format(v) }}
+                              </span>
+                          </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+
+        <br />
+        <div class="card bg-light">
+          <div class="card-header">Dupe Engine Sources</div>
+          <div class="card-body">
+            {% if results.dupeEngineSources| length > 0 %}
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                    <tr>
+                      <th>Rlsname</th>
+                      <th>When</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in results.dupeEngineSources %}
+                        <tr>
+                            <td>{{ row.rlsname }}</td>
+                            <td>{{ row.created|time_diff }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No sources found</p>
+            {% endif %}
+          </div>
+        </div>
+
+
+
+    {% else %}
+          {{ form_start(form) }}
+          
+          <div class="row mb-3">
+            {{ form_label(form.bookmark, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+            <div class="col-sm-9">
+              {{ form_widget(form.bookmark, { attr: { class: "form-select"}}) }}
+              {{ form_errors(form.bookmark) }}
+            </div>
+          </div>
+          
+          <div class="row mb-3">
+            {{ form_label(form.rlsname, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+            <div class="col-sm-9">
+              {{ form_widget(form.rlsname, { attr: { class: "form-control"}}) }}
+              {{ form_errors(form.rlsname) }}
+            </div>
+          </div>
+          
+          <div class="row mb-3">
+            {{ form_label(form.use_cache, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+            <div class="col-sm-9">
+            {% for child in form.use_cache.children %}
+                  {{ form_widget(child) }}
+                  <label class="form-check-label" for="{{ child.vars.id }}">{{ child.vars.label }}</label>
+          {% endfor %}
+              {{ form_errors(form.use_cache) }}
+            </div>
+          </div>
+                      
+          
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    {% endif %}
+
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+  var $targetInput = document.querySelector("input[name='form[rlsname]']");
+  var $maxLimit = document.querySelector("input[name='form[maxlimit]']");
+  if($targetInput) {
+    var newNode = document.createElement('div');
+
+    newNode.innerHTML = 'Shortcuts: <a class="btn btn-sm btn-outline-secondary" id="shortcut-toggle-resolution">Toggle resolution</a> <a id="shortcut-wildcard-episode" class="btn btn-sm btn-outline-secondary">Wildcard episode</a>';
+    newNode.className = 'form-text';
+    $targetInput.parentNode.insertBefore(newNode, $targetInput.nextSibling);
+
+    // toggle res
+    document.getElementById("shortcut-toggle-resolution").addEventListener("click", function(event) {
+      if($targetInput.value.length) {
+        $targetInput.value = toggleResolution($targetInput.value);
+      }
+    });
+
+    // wildcard episode
+    document.getElementById("shortcut-wildcard-episode").addEventListener("click", function(event) {
+      if($targetInput.value.length) {
+        $targetInput.value = wildcardEpisode($targetInput.value);
+        if($targetInput.value.includes("*")) {
+          this.setAttribute("disabled", "disabled");
+          $maxLimit.value = 0;
+        }
+      }
+    });
+  }
+
+  function toggleResolution(rlsname) {
+    console.log(rlsname);
+    if(rlsname.toUpperCase().includes("720P")) {
+      return rlsname.replace(/720(P)/i, "1080$1");
+    }
+    else if(rlsname.toUpperCase().includes("1080P")) {
+      console.log("ok");
+      return rlsname.replace(/1080(P)/i, "720$1");
+    }
+    else {
+      return rlsname;
+    }
+  }
+
+  function wildcardEpisode(rlsname) {
+    if(rlsname.includes("*")) {
+      return rlsname;
+    }
+
+    var matches = /S\d+E\d+.*?[\._]/i.exec(rlsname);
+    if(matches !== null && matches.length > 0) {
+      return rlsname.replace(/E\d+/i, 'E*');
+    }
+
+    return rlsname;
+  }
+</script>
+{% endblock %}

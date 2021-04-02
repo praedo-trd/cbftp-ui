@@ -1,0 +1,120 @@
+{
+    "irc": {
+        "strings": {
+            "endstring": "\/^End\\s+(.*?)\\s+(.*?)$\/i",
+            "endstring-isregex": 1,
+            "newstring": "-&other- [&section] + NEW IN: &release pre'd",
+            "newstring-isregex": 0,
+            "nukestring": "-&other- [NUKED] [&section] + &release was nuked",
+            "prestring": "\/^Pre\\s+(.*?)\\s+(.*?)$\/i",
+            "prestring-isregex": 1,
+            "prestring-rls": "2",
+            "nukestring-rls": "3",
+            "unnukestring-section": "2",
+            "endstring-section": "1",
+            "unnukestring-rls": "3",
+            "endstring-rls": "2",
+            "unnukestring": "-&other- [UNNUKED] [&section] + &release was unnuked",
+            "newstring-section": "2",
+            "newstring-rls": "3",
+            "prestring-section": "1",
+            "nukestring-section": "2"
+        },
+        "channel": "\/^#Channel\/i",
+        "channel_key": "channelkey",
+        "bot": "\/^Botname$\/"
+    },
+    "enabled": true,
+    "affils": [
+        "Affil1",
+        "Affil2"
+    ],
+    "sections": [
+        {
+            "name": "TVBR720P",
+            "pretime": "60",
+            "bnc": "",
+            "tags": [
+                {
+                    "tag": "TVBLURAY-720P",
+                    "trigger": "\/.*\/"
+                }
+            ],
+            "rules": [
+                "[tvmaze.language] == English ALLOW",
+                "[tvmaze.country] == United States OR [tvmaze.country] == United Kingdom OR [tvmaze.country] == Canada ALLOW",
+                "[tvmaze.classification] != Scripted DROP"
+            ],
+            "skiplists": [],
+            "dupeRules": {
+                "source.firstWins": false,
+                "source.priority": ""
+            }
+        },
+        {
+            "name": "HD-MOVIES",
+            "pretime": "30",
+            "bnc": "",
+            "tags": [
+                {
+                    "tag": "X264-1080P",
+                    "trigger": "\/.*\/",
+                    "rules": [
+                        "[rlsname] iswm *720* DROP"
+                    ]
+                },
+                {
+                    "tag": "X264-720P",
+                    "trigger": "\/720p\/i",
+                    "rules": [
+                        "[rlsname] iswm *1080* DROP"
+                    ]
+                }
+            ],
+            "rules": [
+                "[rlsname] !iswm *x264* DROP",
+                "[rlsname] !iswm *1080p* DROP",
+                "[rlsname] !iswm *bluray* DROP",
+                "[imdb.rating] >= 5 ALLOW",
+                "[imdb.votes] >= 66 ALLOW",
+                "[imdb.stv] == true DROP",
+                "[rlsname] iswm *3D* DROP",
+                "[rlsname] iswm *internal* DROP",
+                "[rlsname] iswm *custom* DROP",
+                "[rlsname] iswm *subbed* DROP",
+                "[rlsname] iswm *subs* DROP",
+                "[imdb.language_primary] == English ALLOW",
+                "[rlsname] iswm *screener* DROP",
+                "[rlsname] iswm *dvdscr* DROP"
+            ],
+            "skiplists": [],
+            "dupeRules": {
+                "source.firstWins": false,
+                "source.priority": ""
+            }
+        },
+        {
+            "name": "DOX",
+            "bnc": null,
+            "pretime": 60,
+            "tags": [
+                {
+                    "tag": "DOX",
+                    "trigger": "\/.*\/i",
+                    "rules": [
+                        "[rlsname] iswm *DLC* DROP"
+                    ]
+                }
+            ],
+            "skiplists": [],
+            "rules": [
+                "[rlsname] iswm *FULL* ALLOW"
+            ],
+            "dupeRules": {
+                "source.firstWins": false,
+                "source.priority": ""
+            }
+        }
+    ],
+    "banned_groups": []
+}

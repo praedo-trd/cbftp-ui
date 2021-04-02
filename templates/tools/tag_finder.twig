@@ -1,0 +1,38 @@
+{% extends "layout.twig" %}
+{% import "_macros/data_value.twig" as data_value %}
+
+{% block content %}
+
+  <div class="hbd">
+    <h3>Tools > Tag Finder</h3>
+  </div>
+  
+  <div class="alert alert-danger">Not yet implemented</div>
+
+    
+  {{ form_start(form) }}
+
+  <div class="row mb-3">
+    {{ form_label(form.site, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+    <div class="col-sm-9">
+      {{ form_widget(form.site, { attr: { class: "form-control"}}) }}
+      {{ form_errors(form.site) }}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    {{ form_label(form.announce_string, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+    <div class="col-sm-9">
+      {{ form_widget(form.announce_string, { attr: { class: "form-control"}}) }}
+      {{ form_errors(form.announce_string) }}
+    </div>
+  </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+  {{ form_end(form) }}
+
+{% endblock %}

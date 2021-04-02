@@ -1,0 +1,514 @@
+{
+    "require_pretime": true,
+    "data_exchange_channel": "#datachannel",
+    "always_add_affils": true,
+    "baddir": "\/(internal|pretes|t[\\.\\-_]e[\\.\\-_]s|pre.*?test|test.*?pre|p[\\._\\-]r.[\\.\\-_]e|Dirfix|subfix|samplefix|nfofix|prooffix|Proof|Subs|Sample|Covers|CD\\d+|DVD\\d+|Disk\\d+|Backfill|temp|nuke|[a4]+u[7t]+[0o]+|[t7]+r[4a]+d[e3]+r|dubbed|\\..*?SUB\\.)\/i",
+    "tags": [
+        "0DAY",
+        "APPS",
+        "BLURAY",
+        "BOOKWARE",
+        "DOX",
+        "DVDR",
+        "EBOOKS",
+        "GAMES",
+        "MDVDR",
+        "MP3",
+        "MVID",
+        "NDS",
+        "PAYSITE",
+        "PS3",
+        "PS4",
+        "PSP",
+        "SUBPACK",
+        "TV",
+        "TV1080P",
+        "TV720P",
+        "TVBLURAY-1080P",
+        "TVBLURAY-720P",
+        "TVDK",
+        "TVDVDR",
+        "TVDVDRIP",
+        "TVNO",
+        "TVSWE",
+        "TVWEB",
+        "TVWEB1080",
+        "TVWEB720",
+        "TVX265",
+        "WII",
+        "X264-1080P",
+        "X264-2160P",
+        "X264-720P",
+        "XBOX",
+        "XBOX360",
+        "XBOXONE",
+        "XVID",
+        "XXX",
+        "XXXDVDR"
+    ],
+    "ignore_tags": [
+        "0DAY",
+        "MDVDR",
+        "MP3",
+        "MVID",
+        "PAYSITE",
+        "SUBPACK"
+    ],
+    "tag_options": {
+        "BLURAY": {
+            "data_sources": [
+                "imdb"
+            ],
+            "tag_requires": [
+                "\/COMPLETE\\.BLURAY\/i"
+            ],
+            "tag_skiplist": [
+                "\/(HDTV|720p|1080p)\/i",
+                "\/S\\d+\/i"
+            ]
+        },
+        "BOOKWARE": {
+            "data_sources": [],
+            "allowed_groups": [
+                "ELOHiM",
+                "JGTiSO",
+                "OXBRiDGE",
+                "kEISO"
+            ],
+            "tag_requires": [
+                "\/^(LYNDA|PLURALSIGHT|UDEMY|OREILLY|PACKT_PUBLISHING|INFINITESKILLS)\/i"
+            ]
+        },
+        "DOX": {
+            "allowed_groups": [
+                "CODEX",
+                "PLAZA",
+                "RELOADED",
+                "SKIDROW",
+                "BAT",
+                "CPY"
+            ],
+            "tag_requires": [
+                "\/\\.(Update|Patch|Hotfix|Crack|Unlocker|DLC|Fix)\/i"
+            ],
+            "tag_skiplist": [
+                "\/(Crackfix|DLC)\/i"
+            ]
+        },
+        "GAMES": {
+            "allowed_groups": [
+                "ACTIVATED",
+                "CODEPUNKS",
+                "CODEX",
+                "CPY",
+                "DINOByTES",
+                "ENIGMA",
+                "FLT",
+                "HI2U",
+                "PLAZA",
+                "RELOADED",
+                "Razor1911",
+                "SKIDROW",
+                "STEAMPUNKS",
+                "TiNYiSO"
+            ],
+            "tag_skiplist": [
+                "\/(RUSSIAN|GERMAN|FRENCH|DUTCH|ITALIAN)\/i",
+                "\/(WII|PS4|PS3|VITA)\/i",
+                "\/(h|x)264\/i",
+                "\/GOG\/i",
+                "\/HDTV\/i",
+                "\/Update\\.v\\d+\\.\\d+\/i",
+                "\/\\.(Update|Patch|Hotfix|Unlocker|DLC|\\.Fix)\/i",
+                "\/\\.RIP-\/i"
+            ]
+        },
+        "TV": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "allowed_groups": [],
+            "tag_requires": [
+                "\/(HDTV|PDTV)\/i"
+            ],
+            "tag_skiplist": [
+                "\/(720|1080P)\/i",
+                "\/(Cracked|Patched|Keygen|ebook|pda|WiNALL)\/i",
+                "\/(DVDR|MDVDR|MVID|[_\\-\\.]NDS|PS\\d+|WII|XBOX|XXX)\/i",
+                "\/(NORWEGIAN|SWEDISH)\/i",
+                "\/(divx|wmv)\/i",
+                "\/[\\._]Multi[\\._]\/i"
+            ]
+        },
+        "TV720P": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "tag_requires": [
+                "\/720p[\\._]HDTV[\\._](x|h)264\/i"
+            ],
+            "tag_skiplist": [
+                "\/(Cracked|Patched|Keygen|ebook|pda|WiNALL)\/i",
+                "\/(DVDR|MDVDR|MVID|[_\\-\\.]NDS|PS\\d+|WII|XBOX|XXX)\/i",
+                "\/(NORWEGIAN|SWEDISH)\/i",
+                "\/(PDTV|DSR|WEBRIP)\/i",
+                "\/(xvid|divx|wmv)\/i",
+                "\/1080P\/i",
+                "\/[\\._]Multi[\\._]\/i",
+                "\/\\.vs\\.\/i"
+            ]
+        },
+        "TV1080P": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "tag_requires": [
+                "\/1080p[\\._]HDTV[\\._](x|h)264\/i"
+            ],
+            "tag_skiplist": [
+                "\/[\\._]Multi[\\._]\/i",
+                "\/\\.vs\\.\/i"
+            ]
+        },
+        "TVBLURAY-720P": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "tag_requires": [
+                "\/720p[\\._]Bluray[\\._]x264\/i"
+            ],
+            "tag_skiplist": [
+                "\/(HDTV|PDTV|DSR|WEBRIP)\/i",
+                "\/1080p\/i",
+                "\/[\\._]Multi[\\._]\/i"
+            ]
+        },
+        "TVWEB": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "tag_requires": [
+                "\/(?!(720|1080)p)[\\._-](WEB|WEBRIP)\/i"
+            ],
+            "tag_skiplist": [
+                "\/[\\._]Multi[\\._]\/i"
+            ]
+        },
+        "TVWEB720": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "tag_requires": [
+                "\/720p[\\._-](WEB|Webrip)[\\._-]\/i"
+            ],
+            "tag_skiplist": [
+                "\/(HDTV|PDTV|DSR)\/i",
+                "\/(NORWEGIAN|SWEDISH|DANISH|FINNISH|DUTCH|FRENCH)\/i",
+                "\/Bluray\/i",
+                "\/[\\._]Multi[\\._]\/i"
+            ]
+        },
+        "TVWEB1080": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "tag_requires": [
+                "\/1080p[\\._-](WEB|Webrip)[\\._-]\/i"
+            ],
+            "tag_skiplist": [
+                "\/(HDTV|PDTV|DSR)\/i",
+                "\/Bluray\/i",
+                "\/[\\._]Multi[\\._]\/i",
+                "\/(NORWEGIAN|SWEDISH|DANISH|FINNISH|DUTCH|FRENCH)\/i"
+            ]
+        },
+        "TVNO": {
+            "data_sources": [],
+            "tag_requires": [
+                "\/NORWEGiAN\\.720p\\.(HDTV|WEBRIP|WEB)\\.(x|h)264\/i"
+            ],
+            "tag_skiplist": [
+                "\/\\.vs\\.\/i"
+            ]
+        },
+        "TVDK": {
+            "data_sources": [],
+            "tag_requires": [
+                "\/DANISH\\.720p\\.(HDTV)\\.(x|h)264\/i"
+            ]
+        },
+        "TVSWE": {
+            "data_sources": [],
+            "tag_requires": [
+                "\/SWEDiSH\\.720p\\.(HDTV)\\.(x|h)264\/i"
+            ],
+            "tag_skiplist": [
+                "\/\\.vs\\.\/i"
+            ]
+        },
+        "TVBLURAY-1080P": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "tag_requires": [
+                "\/1080p[\\._]Bluray[\\._]x264\/i"
+            ],
+            "tag_skiplist": [
+                "\/(HDTV|PDTV|DSR|WEBRIP)\/i",
+                "\/720p\/i",
+                "\/[\\._]Multi[\\._]\/i"
+            ]
+        },
+        "TVDVDR": {
+            "data_sources": [
+                "tvmaze"
+            ]
+        },
+        "TVDVDRIP": {
+            "data_sources": [
+                "tvmaze"
+            ],
+            "tag_skiplist": [
+                "\/[\\._]Multi[\\._]\/i"
+            ],
+            "tag_requires": [
+                "\/(DVDRIP|BDRIP)\/i"
+            ]
+        },
+        "XVID": {
+            "data_sources": [
+                "imdb"
+            ]
+        },
+        "X264-720P": {
+            "data_sources": [
+                "imdb"
+            ],
+            "tag_skiplist": [
+                "\/((HD|PD)TV|DSR|WEBRIP)\/i",
+                "\/(Cracked|Patched|Keygen|ebook|pda|WiNALL)\/i",
+                "\/(DVDR|MDVDR|MVID|[_\\-\\.]NDS|PS\\d+|WII|XBOX|XXX)\/i",
+                "\/(xvid|divx|wmv)\/i",
+                "\/1080p\/i",
+                "\/SUBPACK\/i"
+            ],
+            "tag_requires": [
+                "\/720p\\.Bluray\\.(x|h)264\/i"
+            ]
+        },
+        "X264-1080P": {
+            "data_sources": [
+                "imdb"
+            ],
+            "tag_skiplist": [
+                "\/((HD|PD)TV|DSR|WEBRIP)\/i",
+                "\/(Cracked|Patched|Keygen|ebook|pda|WiNALL)\/i",
+                "\/(DVDR|MDVDR|MVID|[_\\-\\.]NDS|PS\\d+|WII|XBOX|XXX)\/i",
+                "\/(xvid|divx|wmv)\/i",
+                "\/720P\/i",
+                "\/SUBPACK\/i"
+            ],
+            "tag_requires": [
+                "\/1080p\\.Bluray\\.(x|h)264\/i"
+            ]
+        },
+        "X264-2160P": {
+            "data_sources": [
+                "imdb"
+            ],
+            "tag_skiplist": [
+                "\/((HD|PD)TV|DSR|WEBRIP)\/i",
+                "\/(720|1080)p\/i",
+                "\/(Cracked|Patched|Keygen|ebook|pda|WiNALL)\/i",
+                "\/(DVDR|MDVDR|MVID|[_\\-\\.]NDS|PS\\d+|WII|XBOX|XXX)\/i",
+                "\/(xvid|divx|wmv)\/i",
+                "\/SUBPACK\/i"
+            ],
+            "tag_requires": [
+                "\/2160p\\.UHD\\.Bluray\\.(x|h)26(4|5)\/i"
+            ]
+        },
+        "DVDR": {
+            "data_sources": [
+                "imdb"
+            ]
+        },
+        "0DAY": {
+            "tag_skiplist": [
+                "\/((HD|PD)TV|DSR)\/i",
+                "\/(DVDR-|MDVDR|MVID|[_\\-\\.]NDS|PS\\d+|WII|XBOX|XXX)\/i",
+                "\/(x264|xvid|divx|wmv|WEBRIP)\/i"
+            ]
+        },
+        "MP3": {
+            "tag_skiplist": [
+                "\/(DVDR|MDVDR|MVID|[_\\-\\.]NDS|PS\\d+|WII|XBOX|XXX)\/i",
+                "\/(divx|wmv|xvid)\/i",
+                "\/(Cracked|Patched|Keygen|ebook|pda|WiNALL)\/i",
+                "\/(720|1080P|HDTV|x264)\/i"
+            ]
+        },
+        "BLURAY-UHD": {
+            "data_sources": [
+                "imdb"
+            ],
+            "allowed_groups": [],
+            "tag_requires": [
+                "\/UHD\\.BLURAY\/i"
+            ],
+            "tag_skiplist": [
+                "\/hdtv\/i",
+                "\/x264\/i"
+            ]
+        },
+        "XXX": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [
+                "\/(dvdrip|bdrip)\/i",
+                "\/XXX\/i"
+            ],
+            "tag_skiplist": [
+                "\/(cdr|hdtv|web)\/i"
+            ]
+        },
+        "APPS": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "EBOOKS": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "MDVDR": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "MVID": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "NDS": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "PS3": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "PS4": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "PAYSITE": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "PSP": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "SUBPACK": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "WII": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "XBOX360": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        },
+        "XBOXONE": {
+            "data_sources": [],
+            "allowed_groups": [],
+            "tag_requires": [],
+            "tag_skiplist": []
+        }
+    },
+    "default_skiplists": [
+        "no_internals",
+        "no_internals_2"
+    ],
+    "banned_groups": [],
+    "auto_settings": {
+        "hdtv": {
+            "allowed_classifications": [
+                "Scripted"
+            ],
+            "allowed_countries": [
+                "United Kingdom",
+                "United States"
+            ]
+        }
+    },
+    "children_networks": [
+        "CBBC",
+        "Cartoon Network",
+        "Disney Channel",
+        "Disney XD",
+        "Nick Jr.",
+        "Nickelodeon",
+        "nick@nite"
+    ],
+    "refresh_ended_shows": true,
+    "cbftp_host": "127.0.0.1",
+    "cbftp_port": "12345",
+    "cbftp_password": "",
+    "approved_straight_to_cbftp": false,
+    "schedule": {
+        "1": [
+            "00:00",
+            "23:59"
+        ],
+        "2": [
+            "00:00",
+            "23:59"
+        ],
+        "3": [
+            "00:00",
+            "23:59"
+        ],
+        "4": [
+            "00:00",
+            "23:59"
+        ],
+        "5": [
+            "00:00",
+            "23:59"
+        ],
+        "6": [
+            "00:00",
+            "23:59"
+        ],
+        "7": [
+            "00:00",
+            "23:59"
+        ]
+    }
+}

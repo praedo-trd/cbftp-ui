@@ -1,0 +1,21 @@
+{% extends "layout.twig" %}
+
+{% form_theme form '_form_themes/bootstrap_3_horizontal_layout_extended.twig' %}
+
+{% block content %}
+
+    <div class="hbd">
+      <h3>Add Site</h3>
+    </div>
+
+    <form action="{{ path('site.add') }}" method="post">
+        {{ form_widget(form) }}
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

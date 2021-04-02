@@ -1,0 +1,19 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+    <div class="hbd">
+      <h3>Delete expired approval rules</h3>
+    </div>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+      <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+              <p>Will delete {{ total }} rows.</p>
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+      </div>
+  {{ form_end(form) }}
+
+{% endblock %}

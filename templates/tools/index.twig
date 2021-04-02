@@ -1,0 +1,67 @@
+{% extends "layout.twig" %}
+
+
+{% block content %}
+
+    <div class="hbd">
+      <h1 class="heading">Tools</h1>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Simulator</h5>
+              <p class="card-text">Simulate a race and get all debug info</p>
+              <p class="align-self-end" style="margin-top: auto"><a class="btn btn-primary" href="{{ path('tools.simulator') }}">Go &raquo;</a></p>
+            </div>
+          </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Tag overview</h5>
+            <p class="card-text">Get an overview of all tags in use, and which sites have them.</p>
+            <p class="align-self-end" style="margin-top: auto"><a class="btn btn-primary" href="{{ path('tools.tag_overview') }}">Go &raquo;</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Data immutable</h5>
+            <p class="card-text">Show all data lookups than have been "fixed".</p>
+            <p class="align-self-end" style="margin-top: auto"><a class="btn btn-primary" href="{{ path('tools.data_immutable') }}">Go &raquo;</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CBFTP Raw</h5>
+            <p class="card-text">Send a raw command to a selection of sites and see the nerdy response.</p>
+            <p class="align-self-end" style="margin-top: auto"><a class="btn btn-primary" href="{{ path('tools.cbftp_raw') }}">Go &raquo;</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CBFTP missing section finder</h5>
+            <p class="card-text">Find sites where sections have not been added.</p>
+            <p class="align-self-end" style="margin-top: auto"><a class="btn btn-primary" href="{{ path('tools.cbftp_missing_sections') }}">Go &raquo;</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Announce simulator</h5>
+            <p class="card-text">Find out which tag will be used based off irc announce</p>
+            <p class="align-self-end" style="margin-top: auto"><a class="btn btn-primary" href="{{ path('tools.tag_finder') }}">Go &raquo;</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

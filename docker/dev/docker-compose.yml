@@ -1,0 +1,35 @@
+version: '3.4'
+services:
+  trdserver:
+    depends_on:
+      - trddb
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./../../:/opt/trd
+      - ./../../.trd.example:/home/trd/.trd
+    ports:
+      - 10000:10000
+      - 12345:12345
+  adminer:
+    image: adminer
+    restart: on-failure
+    ports:
+      - '8081:8080'
+  trddb:
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: trd
+    ports:
+      - 3306:3306
+    volumes:
+      - ./../../misc/db.sql:/docker-entrypoint-initdb.d/database.sql
+      - trd-db:/var/lib/mysql
+
+volumes:
+  trd-db: {}

@@ -1,0 +1,45 @@
+{% extends "layout.twig" %}
+
+{#{% form_theme form 'bootstrap_3_layout.html.twig' %}#}
+
+{% block content %}
+
+</div>
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-2">
+        <table class="table table-bordered">
+                <thead class="table-light">
+                <tr>
+                    <th>All sites:</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for s, siteInfo in sites %}
+                      <tr class="{% if siteName is defined and siteName is not null and siteName == s %}active{% elseif siteInfo.enabled == 0 %}table-danger{%endif%}">
+                          <td><a href="{{ path('site.edit', {name: s}) }}">{{ s }}</a></td>
+                      </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+      </div>
+      <div class="col-md-10">
+
+        <div id="site-edit" data-site="{{ siteName }}"></div>
+
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+
+{% endblock %}
+{% block js %}
+
+{# <script src="https://cdn.jsdelivr.net/ace/1.2.6/min/ace.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/theme-monokai.js" integrity="sha256-7cIQkc8Lu7B+hfKm9L+/3nBrK19hjLIfVaNdcKlBsMg=" crossorigin="anonymous"></script> #}
+
+<div id="help-content"></div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "layout.twig" %}
+{% import "_macros/data_value.twig" as data_value %}
+
+{% block content %}
+
+    <div class="hbd">
+      <h3>Tools > CBFTP missing sections finder</h3>
+    </div>
+
+    {% if missingSettings %}
+      <div class="alert alert-warning">Please configure your cbftp settings first</div>
+    {% else %}
+      {{ form_start(form) }}
+
+      {{ form_widget(form) }}
+                  
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+      {{ form_end(form) }}
+
+      {% if ran %}
+      
+          {% if standardResults|length > 0 %}
+            <br />          
+            {% for site, tags in standardResults %}
+              <div class="card bg-light">
+                <div class="card-header">{{ site }}</div>
+                <div class="card-body">{{ tags|join(", ")}}</div>
+              </div>
+              <br />
+            {% endfor %}
+          {% endif %}
+          
+          {% if ringResults|length > 0 %}
+            <br />          
+            {% for site, bncs in ringResults %}
+              <div class="card bg-light">
+                <div class="card-header">{{ site }}</div>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <tbody>
+                      {% for bnc, tags in bncs %}
+                      <tr>
+                        <td width="1%">{{ bnc }}</td>
+                        <td width="99%">
+                          {{ tags|join(", ") }}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br />
+            {% endfor %}
+          {% endif %}
+          
+      
+      {% endif %}
+    {% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{
+    "require": {
+        "react/react": "^1.0.0",
+        "react/socket": "^1.4.0",
+        "bramus/ansi-php": "^3.0",
+        "malenki/ansi": "^1.2",
+        "doctrine/dbal": "^2.5",
+        "silex/silex": "^1.3",
+        "symfony/console": "2.8.*",
+        "twig/twig": "^1.23",
+        "symfony/twig-bridge": "2.8.*",
+        "symfony/form": "2.8.*",
+        "symfony/validator": "2.8.*",
+        "symfony/config": "2.8.*",
+        "symfony/translation": "2.8.*",
+        "symfony/security-csrf": "2.8.*",
+        "pimple/pimple": "~1.0",
+        "monolog/monolog": "^1.18",
+        "symfony/dom-crawler": "^3.0",
+        "symfony/css-selector": "^3.0",
+        "twig/extensions": "^1.3",
+        "symfony/event-dispatcher": "2.8.*",
+        "erusev/parsedown": "^1.6",
+        "pagerfanta/pagerfanta": "^1.0",
+        "chrismou/php-irc-text-formatting": "^1.0",
+        "silex/web-profiler": "^1.0",
+        "sorien/silex-dbal-profiler": "~1.1",
+        "guzzlehttp/guzzle": "^7.0",
+        "symfony/dotenv": "^5.1"
+    }
+    ,"autoload": {
+        "psr-0": {
+            "TRD": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "phpstan/phpstan": "^0.12.74"
+    }
+}

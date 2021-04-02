@@ -1,0 +1,22 @@
+{
+  "everything": {
+    "items": ["*"]
+    , "shared": true
+  },
+  "no_internals": {
+    "items": ["*internal*", "*.int.*", "*-int-*", "*int", "*internal"]
+    ,"shared": true
+  },
+  "no_subbed_or_dubbed": {
+    "items": ["*subbed*", "*dubbed*", "*-subbed.*", "*-dubbed."]
+    ,"shared": true
+  },
+  "hdtv": {
+    "items": ["*hdtv*"]
+    ,"shared": true
+  },
+  "non_english_language": {
+    "regex": "\/[\\._-](Afar|Abkhaz|Avestan|Afrikaans|Akan|Amharic|Aragonese|Arabic|Assamese|Avaric|Aymara|Azerbaijani|Bashkir|Belarusian|Bulgarian|Bihari|Bislama|Bambara|Bengali|Tibetan|Breton|Bosnian|Catalan|Valencian|Chechen|Chamorro|Corsican|Cree|Czech|Chuvash|Welsh|Danish|German|Divehi|Dhivehi|Maldivian|Dzongkha|Ewe|Greek|English|Esperanto|Spanish|Castilian|Estonian|Basque|Persian|Fula|Fulah|Pulaar|Pular|Finnish|Fijian|Faroese|French|Frisian|Irish|Gaelic|Galician|Gujarati|Manx|Hausa|Hebrew|Hindi|Hiri Motu|Croatian|Haitian|Hungarian|Armenian|Herero|Interlingua|Indonesian|Interlingue|Igbo|Nuosu|Inupiaq|Ido|Icelandic|Italian|Inuktitut|Japanese|Javanese|Georgian|Kongo|Kikuyu|Gikuyu|Kwanyama|Kuanyama|Kazakh|Kalaallisut|Greenlandic|Khmer|Kannada|Korean|Kanuri|Kashmiri|Kurdish|Komi|Cornish|Kirghiz|Kyrgyz|Latin|Luxembourgish|Letzeburgesch|Luganda|Limburgish|Limburgan|Limburger|Lingala|Lao|Lithuanian|Luba-Katanga|Latvian|Malagasy|Marshallese|Maori|Macedonian|Malayalam|Mongolian|Malay|Maltese|Burmese|Nauru|Nepali|Ndonga|Dutch|Norwegian|Nynorsk|Navajo|Navaho|Chichewa|Chewa|Nyanja|Occitan|Ojibwe|Ojibwa|Oromo|Oriya|Ossetian|Ossetic|Panjabi|Punjabi|Pali|Polish|Pashto|Pushto|Portuguese|Quechua|Romansh|Kirundi|Romanian|Moldavian|Moldovan|Russian|Kinyarwanda|Sanskrit|Sardinian|Sindhi|Sami|Sango|Sinhala|Sinhalese|Slovak|Slovene|Samoan|Shona|Somali|Albanian|Serbian|Swati|Sundanese|Swedish|Swahili|Tamil|Telugu|Tajik|Thai|Tigrinya|Turkmen|Tagalog|Tswana|Turkish|Tsonga|Tatar|Twi|Tahitian|Uighur|Uyghur|Ukrainian|Urdu|Uzbek|Venda|Vietnamese|Walloon|Wolof|Xhosa|Yiddish|Yoruba|Zhuang|Chuang|Chinese|Zulu)[\\._-]\/i",
+    "shared": true
+  }
+}

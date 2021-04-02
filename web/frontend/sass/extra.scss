@@ -1,0 +1,194 @@
+html, body { height: 100%; }
+body { overflow-x: hidden; }
+
+@media (min-width: 1200px) {
+  .container {
+    width: 100%;
+    max-width: 1440px;
+  }
+}
+
+.navbar.sticky-top {
+  margin-bottom: 2em;
+}
+
+.navbar .divider-vertical {
+    height: 50px;
+    margin: 0 9px;
+    border-right: 1px solid #ffffff;
+    border-left: 1px solid #f2f2f2;
+}
+
+.navbar-inverse .divider-vertical {
+    border-right-color: #333;
+    border-left-color: #222;
+}
+
+@media (max-width: 767px) {
+    .navbar-collapse .nav > .divider-vertical {
+        display: none;
+     }
+}
+
+.form-inline label, .form-inline input {
+    margin: 0 10px 0 0;
+}
+.nav-pills {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.nav-pills>li>a {
+    padding: 2px 15px;
+    border-radius: 0;
+}
+
+.tag-list-vertical {
+  max-height: 700px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  .nav-pills {
+    border: 0;
+  }
+}
+
+.tab-panel {
+    display: none;
+}
+.tab-panel-visible {
+    display: block;
+}
+.well-tag {
+    border-radius: 0 !important;
+}
+.badge {
+    background: #aaa;
+}
+.nav-pills .notags {
+    color: #ff0011;
+    &.active {
+      background: #ff0011;
+      color: #fff;
+    }
+}
+
+.nav-stacked a {
+    color: #333;
+}
+.label-inactive {
+    background: #aaa;
+}
+tr.race-empty td.race-rlsname, tr.expired td.rlsname {
+   color: #aaa;
+}
+.form-group {
+    overflow: hidden;
+}
+#form_expires select {
+    margin-right: .5em;
+}
+#form_expires_time_minute {
+    margin-left: .5em !important;
+}
+#form_expires_date_year {
+    margin-right: 2em !important;
+}
+
+#help {
+  position: fixed;
+  padding: 70px 1.5em 30px;
+  z-index: 2;
+  right: 0;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  background: #444;
+  border-left: 1px solid #ccc;
+  color: #efefef;
+  overflow-y: scroll;
+  right: -30%;
+  transition: right .1s ease-in-out;
+  border-left: 7px solid #ccc;
+  max-width: 600px;
+}
+#help.visible {
+  right: 0;
+}
+#help .content {
+
+}
+#help .close { float: right; color: #fff; }
+
+#help-content { display: none; }
+
+#help code {
+  word-wrap:break-word;
+}
+
+.row.is-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+.row.is-flex > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea.code, input.code {
+  font-family: Monospace;
+  background: #222;
+  color: #fff;
+}
+
+.btn-group-xs > .btn, .btn-xs {
+  padding: .25rem .4rem;
+  font-size: .875rem;
+  line-height: .5;
+  border-radius: .2rem;
+}
+
+input.form-control-code {
+  font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  font-size: 90%;
+}
+
+.hbd {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  
+  .heading, h1, h2, h3, h4, h5, h6 {
+    flex: 1;
+    //@include font-size($h3-font-size);
+    margin: 0;
+  }
+  
+  .controls {
+    
+  }
+  
+  .description {
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 0;
+  }
+  
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* bootstrap removed */
+.btn-block {
+  display: block;
+}

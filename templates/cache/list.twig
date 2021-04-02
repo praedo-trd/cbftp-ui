@@ -1,0 +1,107 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+    {#<div class="row">#}
+        {#<div class="col-md-4">#}
+            <h3>Cache List (TV only)</h3>
+
+            <ul class="nav nav-tabs">
+              <li role="presentation" class="{% if not approved %}active{% endif %}"><a href="{{ path('cache.list', {approved: 0}) }}">Unapproved <span class="badge badge-default">{{ totals[0] }}</span></a></li>
+              <li role="presentation" class="{% if approved %}active{% endif %}"><a href="{{ path('cache.list', {approved: 1}) }}">Approved <span class="badge badge-default">{{ totals[1] }}</span></a></li>
+            </ul>
+
+            <table class="table table-bordered table-striped" id="cache-items" data-toggle="table" data-search="true" data-show-columns="true">
+                <thead>
+                <tr>
+                    <!-- <th width="5%">Namespace</th> -->
+                    <th width="1%" data-sortable="true" data-searchable="false">ID</th>
+                    <th width="20%" data-sortable="true">Key</th>
+                    <th width="20%" data-sortable="true">Real Info</th>
+                    <th data-sortable="true">Country</th>
+                    <th data-sortable="true">Network</th>
+                    <th data-sortable="true">Classification</th>
+                    {% if not approved %}
+                    <th width="15%">Actions</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                    {% set k = item.k|replace({'imdb:': '', 'tvmaze:': ''}) %}
+                    <tr class="{% if item.approved == 1 %}success{% endif %}">
+                        <!-- <td>{{ item.namespace }}</td> -->
+                        <td>
+                          <a target="_blank" href="{{item.data.url}}">{{ item.id }}</a>
+                        </td>
+                        <td>{{ item.k|replace({'imdb:': '', 'tvmaze:': ''}) }}</td>
+                        <td>{{ item.data.title }}
+                          ({% if item.data.premiered is defined %}{{ item.data.premiered }}{% else %}{{ item.data.year }}{% endif %})
+                        </td>
+                        <td>{{ item.data.country }}</td>
+                        <td>{{ item.data.network }}</td>
+                        <td>{{ item.data.classification }}</td>
+                        {% if not approved %}
+                        <td>
+
+                          <a class="btn btn-secondary" href="#" data-approve-key="{{item.k}}">Approve</a>
+                          <a class="btn btn-secondary" href="http://www.tvmaze.com/search?q={{ k|url_encode }}" target="_blank" rel="noreferrer"><i class="fa fa-search"></i></a>
+
+                          <!-- <a class="btn btn-secondary" href="#" data-fix="{{item.k}}">Fix</a> -->
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {#</div>#}
+
+    {#</div>#}
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+// attempt to change to es6
+document.addEventListener("DOMContentLoaded", function() {
+  var buttons = document.querySelectorAll("#cache-items [data-approve-key]");
+  Array.from(buttons).forEach(btn => {
+      btn.addEventListener('click', function(event) {
+          var $tr = btn.closest("td").parentNode;
+          var k = btn.getAttribute("data-approve-key");
+          var $this = btn;
+
+          fetch("/api/cache/approve", {
+              body: {k: k}, // must match 'Content-Type' header
+              method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            })
+            .then(response => response.json())
+            .then(data => {
+              if(typeof data.success != 'undefined') {
+                  $tr.classList.add('success');
+                  setTimeout(function () {
+                    fadeOut($tr);
+                  }, 200);
+              }
+            });
+
+          return false;
+      });
+  });
+});
+
+function fadeOut(el){
+  el.style.opacity = 1;
+
+  (function fade() {
+    if ((el.style.opacity -= .1) < 0) {
+      el.style.display = "none";
+    } else {
+      requestAnimationFrame(fade);
+    }
+  })();
+};
+</script>
+{% endblock %}

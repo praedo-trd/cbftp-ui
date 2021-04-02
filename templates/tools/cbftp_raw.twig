@@ -1,0 +1,105 @@
+{% extends "layout.twig" %}
+{% import "_macros/data_value.twig" as data_value %}
+
+{% block content %}
+
+    <div class="hbd">
+      <h3>Tools > CBFTP</h3>
+    </div>
+
+    {% if missingSettings %}
+      <div class="alert alert-warning">Please configure your cbftp settings first</div>
+    {% else %}
+      {{ form_start(form) }}
+
+      <div class="row mb-3">
+        {{ form_label(form.siteList, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+        <div class="col-sm-9">
+          {{ form_widget(form.siteList, { attr: { class: "form-control"}}) }}
+          {{ form_errors(form.siteList) }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        {{ form_label(form.command, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+        <div class="col-sm-9">
+          {{ form_widget(form.command, { attr: { class: "form-control"}}) }}
+          {{ form_errors(form.command) }}
+        </div>
+      </div>
+      
+      <div class="row mb-3">
+        {{ form_label(form.path, null, { label_attr: { class: "col-sm-3 col-form-label"} }) }}
+        <div class="col-sm-9">
+          {{ form_widget(form.path, { attr: { class: "form-control"}}) }}
+          {{ form_errors(form.path) }}
+        </div>
+      </div>
+                  
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+      {{ form_end(form) }}
+
+      {% if results %}
+      
+          <br />
+          {% if results.successes|length > 0 %}
+            <div class="card bg-light">
+              <div class="card-header">Successes</div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <td class="5%">Site</td>
+                      <td>Response</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in results.successes %}
+                      <tr>
+                        <td>{{ row.name }}</td>
+                        <td><code>{{ row.result|nl2br }}</code></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          {% endif %}
+          
+
+          {% if results.failures|length > 0 %}
+            <div class="card bg-light">
+              <div class="card-header">Failures</div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <td class="5%">Site</td>
+                      <td>Reason</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in results.failures %}
+                      <tr>
+                        <td>{{ row.name }}</td>
+                        <td><code>{{ row.reason }}</code></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          {% endif %}
+      
+      {% endif %}
+    {% endif %}
+
+
+
+{% endblock %}
